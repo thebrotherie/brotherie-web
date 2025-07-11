@@ -60,3 +60,21 @@ export async function sendWaitlistEmail(data: { email: string; name?: string }) 
     replyTo: email,
   })
 }
+
+/** helper for interest e-mail for new zips */
+export async function sendInterestEmail(data: {
+  town: string
+  address: string
+  email: string
+}) {
+  const { town, address, email } = data
+  await sendEmail({
+    subject: '[Delivery Interest] New request',
+    html: `
+      <p><strong>Town:</strong> ${town}</p>
+      <p><strong>Address:</strong> ${address}</p>
+      <p><strong>Email:</strong> ${email}</p>
+    `,
+    replyTo: email,
+  })
+}
