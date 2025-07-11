@@ -5,22 +5,33 @@ export default function Contact() {
   const [status, setStatus] = useState<'idle' | 'sent' | 'error'>('idle')
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    const data = Object.fromEntries(new FormData(e.currentTarget)) as {
-      name: string
-      email: string
-      subject: string
-      message: string
-    }
+  e.preventDefault();
 
-    const res = await fetch('/api/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
-    })
-    setStatus(res.ok ? 'sent' : 'error')
-    if (res.ok) e.currentTarget.reset()
+  // Grab the current form element before resetting
+  const form = e.currentTarget;
+
+  const data = Object.fromEntries(new FormData(form)) as {
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+  };
+
+  // Call your API
+  const res = await fetch("/api/contact", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (res.ok) {
+    form.reset();           // 1️⃣ clear all fields
+    setStatus("sent");      // 2️⃣ show thank-you banner
+  } else {
+    setStatus("error");
   }
+}
+
 
   return (
     <section className="bg-[#eae2d8] py-16">
