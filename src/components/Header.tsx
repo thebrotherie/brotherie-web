@@ -38,13 +38,6 @@ export default function Header() {
               {n.label}
             </Link>
           ))}
-          <button
-            onClick={() => setDark(!dark)}
-            aria-label="Toggle theme"
-            className="ml-4 rounded p-1 hover:bg-slate-200 dark:hover:bg-slate-700"
-          >
-            {dark ? <SunIcon size={18}/> : <MoonIcon size={18}/>}
-          </button>
         </nav>
       </div>
     </header>
