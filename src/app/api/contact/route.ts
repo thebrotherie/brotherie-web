@@ -9,7 +9,13 @@ export async function POST(req: Request) {
     /* 1️⃣  save to Supabase */
     const { error } = await supabase
       .from('contact_messages')
-      .insert([{ ...data }])
+      .insert([{
+        name: data.name,
+        email: data.email,
+        subject: data.subject,
+        body: data.message //map --> body
+      }])
+
     if (error) throw error
 
     /* 2️⃣  email the team */
@@ -19,5 +25,10 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error(err)
     return NextResponse.json({ ok: false }, { status: 500 })
+    // robust error logging console.error('contact-api-error ➜', err)
+    //return NextResponse.json(
+      //  { ok: false, message: (err as Error).message },
+       // { status: 500}
+    //)
   }
 }
