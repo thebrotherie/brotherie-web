@@ -34,7 +34,7 @@ export default function Contact() {
 
 
   return (
-    <section className="bg-[#eae2d8] py-16">
+    <section className="bg-[#eae2d8] dark:bg-slate-900 py-16">
       <div className="mx-auto max-w-6xl px-4">
         <h1 className="text-4xl font-bold text-center mb-2">Contact&nbsp;Us</h1>
         <p className="text-center mb-10 text-slate-600 max-w-2xl mx-auto">
@@ -47,7 +47,7 @@ export default function Contact() {
           {/* === LEFT COLUMN === */}
           <div className="space-y-8">
             {/* Card 1 */}
-            <div className="rounded-lg bg-white p-6 shadow">
+            <div className="rounded-lg bg-white dark:bg-slate-500 p-6 shadow">
               <h2 className="text-xl font-semibold mb-4">Get in&nbsp;Touch</h2>
               <ul className="space-y-6 text-sm">
                 <li>
@@ -72,7 +72,7 @@ export default function Contact() {
             </div>
 
             {/* Card 2 */}
-            <div className="rounded-lg bg-white p-6 shadow">
+            <div className="rounded-lg bg-white dark:bg-slate-500 p-6 shadow">
               <h2 className="text-lg font-semibold text-emerald-700 mb-4">
                 Frequently Asked Questions
               </h2>
@@ -94,7 +94,7 @@ export default function Contact() {
           </div>
 
           {/* === RIGHT COLUMN === */}
-          <div className="rounded-lg bg-white p-8 shadow">
+          <div className="rounded-lg bg-white dark:bg-slate-500 p-8 shadow">
             <h2 className="text-xl font-semibold mb-6">Send Us a Message</h2>
 
             {/* flash messages */}
@@ -120,7 +120,7 @@ export default function Contact() {
                     id="name"
                     name="name"
                     required
-                    className="w-full rounded border border-slate-300 dark:border-slate-600"
+                    className="w-full rounded border border-slate-300 dark:bg-slate-200 dark:border-slate-600"
                   />
                 </div>
                 <div>
@@ -132,7 +132,7 @@ export default function Contact() {
                     name="email"
                     type="email"
                     required
-                    className="w-full rounded border border-slate-300 dark:border-slate-600"
+                    className="w-full rounded border border-slate-300 dark:bg-slate-200 dark:border-slate-600"
                   />
                 </div>
               </div>
@@ -144,7 +144,7 @@ export default function Contact() {
                 <input
                   id="subject"
                   name="subject"
-                  className="w-full rounded border border-slate-300 dark:border-slate-600"
+                  className="w-full rounded border border-slate-300 dark:bg-slate-200 dark:border-slate-600"
                 />
               </div>
 
@@ -157,14 +157,14 @@ export default function Contact() {
                   name="message"
                   rows={5}
                   required
-                  className="w-full rounded border border-slate-300 dark:border-slate-600"
+                  className="w-full rounded border border-slate-300 dark:bg-slate-200 dark:border-slate-600"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={status === 'sent'}
-                className="block w-full rounded border bg-black px-4 py-2 font-semibold text-white
+                className="block w-full rounded border bg-black dark:bg-slate-800 px-4 py-2 font-semibold text-white
                            hover:bg-slate-800 disabled:opacity-60"
               >
                 Send Message
