@@ -1,9 +1,0 @@
-/* Make an element span full viewport width but keep inner grid centered */
-.full-bleed {
-  position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  width: 100vw;
-}
