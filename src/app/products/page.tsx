@@ -61,15 +61,17 @@ export default function ProductsPage() {
     return (
       <div
         role="button"
-        tabIndex={0}
         onClick={(e) => {
           e.preventDefault()
           setSelectedTier(tier)
         }}
         className={`
-          relative flex flex-col border bg-white shadow-sm cursor-pointer
-          transition transform hover:scale-105
-          ${isSelected ? 'ring-2 ring-emerald-600 scale-105' : 'border-slate-200'}
+          cursor-pointer
+          relative flex flex-col border bg-white shadow-sm 
+          transition-transform transform-gpu hover:scale-105
+          fixed-card-h
+          ${isSelected 
+            ? 'ring-2 ring-emerald-600 ring-offset-2 ring-offset-white dark:ring-offset-slate-900 scale-105' : 'border-slate-200'}
         `}
       >
         {/* “Most Popular” banner */}

@@ -1,3 +1,4 @@
+import Logo from '@/components/logo'
 import Link from 'next/link'
 import { Instagram } from 'lucide-react'
 
@@ -7,8 +8,14 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl grid gap-8 px-4 py-10 text-sm sm:grid-cols-2 md:grid-cols-4">
         {/* Brand */}
         <div>
-          <h3 className="font-bold text-lg mb-2">The&nbsp;Brotherie</h3>
+          <Logo src="/images/text_only_light.png"
+              darkSrc="/images/default_logo.png" /*change this to dark*/
+              alt="The Brotherie"
+              height = {100}
+            />
+
           <p className="text-slate-600 dark:text-slate-400">
+            <br />
             Small-batch bone broth&nbsp;<br />
             simmered low &amp; slow in Arlington&nbsp;MA.
           </p>
