@@ -19,7 +19,7 @@ export default function Header() {
   return (
     <Disclosure
       as="header"
-      className="relative border-b bg-white/80 dark:bg-slate-800/80 backdrop-blur h-16"
+      className="relative border-b bg-white/80 dark:bg-slate-800/80 backdrop-blur h-"
     >
       {({ open }) => (
         <>
