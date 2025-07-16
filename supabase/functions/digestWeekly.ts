@@ -1,4 +1,4 @@
-import { supabaseAdmin } from '@/lib/supabaseClient'
+import { supabaseAdmin } from '@/lib/supabaseAdmin'
 import { resend } from '@/lib/resend'
 
 interface DraftRow {
