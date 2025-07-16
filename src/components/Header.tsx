@@ -23,7 +23,7 @@ export default function Header() {
     >
       {({ open }) => (
         <>
-          <div className="relative z-10 mx-auto max-w-6xl px-4 py-3 flex h-full items-center justify-between lg:justify-start">
+          <div className="relative z-10 mx-auto max-w-6xl px-4 py-3 flex h-20 items-center justify-between lg:justify-start">
             {/* --- Brand (left) --- */}
             <Link href="/" className="flex items-center gap-2 shrink-0">
               <Logo
@@ -41,7 +41,7 @@ export default function Header() {
             </Disclosure.Button>
 
             {/* --- Nav links (desktop) --- */}
-            <nav className="ml-auto hidden lg:flex gap-6 text-sm">
+            <nav className="ml-auto hidden lg:flex gap-6 text-sm items-center">
               {nav.map(({ href, label }) => (
                 <Link
                   key={href}
@@ -52,12 +52,24 @@ export default function Header() {
                   {label}
                 </Link>
               ))}
+              <Link
+                href="/signup/plan/email"
+                className="rounded bg-emerald-600 px-3 py-1 text-white font-semibold hover:bg-emerald-700"
+                >
+                  Sign Up
+                </Link>
             </nav>
           </div>
 
           {/* --- Mobile panel --- */}
           <Disclosure.Panel className="lg:hidden border-t bg-white dark:bg-slate-800">
-            <nav className="px-4 py-3 flex flex-col gap-2 text-sm">
+            <Link
+                href="/signup/plan/email"
+                className="rounded bg-emerald-600 px-3 py-1 text-white font-semibold hover:bg-emerald-700"
+                >
+                  Sign Up
+                </Link>
+                <nav className="px-4 py-3 flex flex-col gap-2 text-sm">
               {nav.map(({ href, label }) => (
                 <Link
                   key={href}
@@ -67,7 +79,9 @@ export default function Header() {
                 >
                   {label}
                 </Link>
-              ))}
+                
+              )
+              )}
             </nav>
           </Disclosure.Panel>
         </>

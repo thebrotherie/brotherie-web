@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import Script from 'next/script'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,11 +37,16 @@ export default function RootLayout({
         <Header />
 
         {/* page content */}
-        <main className="flex-1">{children}</main>
+        <main className="flex-1 pb-10">{children}</main>
 
         {/* shared footer */}
         <Footer />
-      </body>
-    </html>
+        {/* Google Maps Places API (auto-complete) */}
+        <Script
+          src={`https://maps.googleapis.com/maps/api/js?key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY}&libraries=places&v=beta`}
+          strategy="afterInteractive"
+        />
+  </body>
+</html>
   );
 }

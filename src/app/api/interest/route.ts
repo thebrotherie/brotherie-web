@@ -1,23 +1,20 @@
+// src/app/api/interest/route.ts
 import { NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { supabaseAdmin } from '@/lib/supabaseAdmin'
 import { sendInterestEmail } from '@/lib/email'
 
 export async function POST(req: Request) {
-  try {
-    const data = await req.json()      // { town, address, email }
+  const body = await req.json()  // { email?, zip, street? }
 
-    // store in DB
-    const { error } = await supabase
-      .from('service_interest')
-      .insert([{ ...data }])
-    if (error) throw error
+  const { error } = await supabaseAdmin
+    .from('service_interest')
+    .insert([{ email: body.email ?? null, zip: body.zip, street: body.street ?? '' }])
 
-    // notify team
-    await sendInterestEmail(data)
-
-    return NextResponse.json({ ok: true })
-  } catch (err) {
-    console.error(err)
-    return NextResponse.json({ ok: false }, { status: 500 })
+  if (error) {
+    console.error('service_interest error →', error)   // <-- shows in Vercel / terminal
+    return NextResponse.json({ ok: false, error }, { status: 500 })
   }
+
+  await sendInterestEmail(body)
+  return NextResponse.json({ ok: true })
 }

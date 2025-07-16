@@ -39,3 +39,21 @@ body {
 
 /* fixed card body so grid height never changes */
 .fixed-card-h {min-height:380px}
+
+/* ---------- Design tokens ---------- */
+.btn-primary {
+  @apply w-full rounded bg-emerald-600 px-4 py-2 text-white font-semibold transition hover:bg-emerald-700 disabled:opacity-60;
+}
+.btn-oauth {
+  @apply w-full rounded border border-slate-300 px-4 py-2 text-sm flex items-center justify-center gap-2 hover:bg-slate-50;
+}
+.divider {
+  @apply relative my-6 text-center text-xs text-slate-400 before:content-[''] before:absolute before:left-0 before:top-1/2 before:h-px before:w-full before:bg-slate-200;
+}
+.btn-secondary {
+  @apply rounded bg-slate-800 px-6 py-2 text-white font-semibold transition hover:bg-slate-900;
+}
+.input-field {
+  @apply w-full rounded border border-slate-300 px-4 py-2 focus:border-emerald-600 focus:outline-none;
+}
+
