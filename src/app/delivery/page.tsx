@@ -1,6 +1,6 @@
 'use client'
-import { useState, useMemo } from 'react'
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api'
+import { useState, useCallback } from 'react'
+import { GoogleMap, useLoadScript, Marker } from '@react-google-maps/api'
 
 const mapContainerStyle = { width: '100%', height: '230px' }
 const boston = { lat: 42.3736, lng: -71.1097 }   // Cambridge center as initial focus
@@ -8,6 +8,9 @@ const boston = { lat: 42.3736, lng: -71.1097 }   // Cambridge center as initial 
 const SERVICE_TOWNS = (process.env.NEXT_PUBLIC_SERVICE_TOWNS ??
   'Arlington,Belmont,Burlington,Concord,Lexington,Winchester,Woburn')
   .split(',').map(t => t.trim().toLowerCase())
+
+// Define libraries outside component to prevent re-renders
+const libraries: ("places")[] = ['places']
 
 type Status = 'idle' | 'in' | 'out' | 'sent' | 'error'
 
@@ -19,6 +22,12 @@ export default function DeliveryArea() {
   const [marker, setMarker] = useState<{lat:number;lng:number}|null>(null)
 
   const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_KEY!
+
+  // Use useLoadScript hook instead of LoadScript component
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: apiKey,
+    libraries,
+  })
 
   /** Extract town name from Places result */
   function townFromPlace(place: google.maps.places.PlaceResult) {
@@ -48,13 +57,28 @@ export default function DeliveryArea() {
   async function handleInterest(e: React.FormEvent) {
     e.preventDefault()
     if (status !== 'out') return
-    const res = await fetch('/api/interest', {
-      method: 'POST',
-      headers: { 'Content-Type':'application/json' },
-      body: JSON.stringify({ town, address: query, email }),
-    })
-    setStatus(res.ok ? 'sent' : 'error')
+    try {
+      const res = await fetch('/api/interest', {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json' },
+        body: JSON.stringify({ town, address: query, email }),
+      })
+      setStatus(res.ok ? 'sent' : 'error')
+    } catch (error) {
+      setStatus('error')
+    }
   }
+
+  // Use useCallback to prevent re-creating the function on every render
+  const onMapLoad = useCallback((map: google.maps.Map) => {
+    const autocomplete = new google.maps.places.Autocomplete(
+      document.getElementById('address') as HTMLInputElement,
+      { fields: ['geometry','address_components']}
+    )
+    autocomplete.addListener('place_changed', () =>
+      handleSelect(autocomplete.getPlace())
+    )
+  }, [])
 
   /** marketing copy */
   const Marketing = () => (
@@ -62,7 +86,7 @@ export default function DeliveryArea() {
       <h1 className="text-4xl font-bold">Fresh Broth<br/>Delivered Local</h1>
       <p>
         We currently hand-deliver to a small set of Boston-area towns while we perfect our
-        routes.  Pop your address in the checker&nbsp;→ we’ll let you know instantly.
+        routes.  Pop your address in the checker&nbsp;→ we'll let you know instantly.
         Not in zone yet?  Leave an email and be the first to hear when we expand!
       </p>
       <img
@@ -73,6 +97,35 @@ export default function DeliveryArea() {
     </div>
   )
 
+  // Handle loading and error states
+  if (loadError) {
+    return (
+      <section className="mx-auto max-w-6xl px-4 py-16">
+        <div className="grid gap-12 lg:grid-cols-2">
+          <Marketing />
+          <div>
+            <p className="rounded bg-rose-50 p-4 text-rose-700 text-center">
+              Error loading Google Maps. Please refresh the page.
+            </p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  if (!isLoaded) {
+    return (
+      <section className="mx-auto max-w-6xl px-4 py-16">
+        <div className="grid gap-12 lg:grid-cols-2">
+          <Marketing />
+          <div>
+            <p className="text-center text-slate-500">Loading map...</p>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   return (
     <section className="mx-auto max-w-6xl px-4 py-16">
       <div className="grid gap-12 lg:grid-cols-2">
@@ -81,38 +134,28 @@ export default function DeliveryArea() {
 
         {/* right side checker */}
         <div>
-          <LoadScript googleMapsApiKey={apiKey} libraries={['places']}>
-            <label className="block text-sm font-medium mb-2">
-              Enter your address
-            </label>
+          <label className="block text-sm font-medium mb-2">
+            Enter your address
+          </label>
 
-            <input
-              type="text"
-              placeholder="123 Pleasant St, Arlington MA"
-              value={query}
-              onChange={(e)=>setQuery(e.target.value)}
-              id="address"
-              autoComplete="off"
-              className="mb-4 w-full rounded border border-slate-300 p-2"
-            />
+          <input
+            type="text"
+            placeholder="123 Pleasant St, Arlington MA"
+            value={query}
+            onChange={(e)=>setQuery(e.target.value)}
+            id="address"
+            autoComplete="off"
+            className="mb-4 w-full rounded border border-slate-300 p-2"
+          />
 
-            <GoogleMap
-              mapContainerStyle={mapContainerStyle}
-              center={marker ?? boston}
-              zoom={marker ? 12 : 9}
-              onLoad={(map) => {
-                const autocomplete = new google.maps.places.Autocomplete(
-                  document.getElementById('address') as HTMLInputElement,
-                  { fields: ['geometry','address_components']}
-                )
-                autocomplete.addListener('place_changed', () =>
-                  handleSelect(autocomplete.getPlace())
-                )
-              }}
-            >
-              {marker && <Marker position={marker} />}
-            </GoogleMap>
-          </LoadScript>
+          <GoogleMap
+            mapContainerStyle={mapContainerStyle}
+            center={marker ?? boston}
+            zoom={marker ? 12 : 9}
+            onLoad={onMapLoad}
+          >
+            {marker && <Marker position={marker} />}
+          </GoogleMap>
 
           {/* status messages */}
           {status === 'in' && (
@@ -127,8 +170,8 @@ export default function DeliveryArea() {
           {status === 'out' && (
             <form onSubmit={handleInterest} className="mt-6 space-y-3">
               <p className="rounded bg-amber-50 p-3 text-amber-800 text-sm">
-                We’re not in {town || 'your town'} yet&mdash;but we’d love to know you’re
-                interested!  Leave an email and we’ll keep you posted.
+                We're not in {town || 'your town'} yet&mdash;but we'd love to know you're
+                interested!  Leave an email and we'll keep you posted.
               </p>
               <input
                 type="email"
@@ -148,7 +191,7 @@ export default function DeliveryArea() {
 
           {status === 'sent' && (
             <p className="mt-6 rounded bg-emerald-50 p-4 text-emerald-700 text-center">
-              Thanks!  We’ve logged your interest and will let you know as soon
+              Thanks!  We've logged your interest and will let you know as soon
               as we reach your area. 😊
             </p>
           )}
