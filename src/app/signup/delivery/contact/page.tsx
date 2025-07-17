@@ -13,11 +13,10 @@ const Schema = z.object({
   lastName: z.string().min(2, 'Required'),
   dob: z
     .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, 'YYYY-MM-DD')
     .optional()
     .refine(
-      (v) => !v || new Date(v) < new Date(),
-      'Date must be in the past'
+      (v) => !v || v === '' || (v.match(/^\d{4}-\d{2}-\d{2}$/) && new Date(v) < new Date()),
+      'Date must be in the past and in MM-DD-YYYY format'
     ),
   phone: z.string().regex(phoneRegex, 'US phone number'),
   smsOk: z.boolean(),
@@ -54,7 +53,7 @@ export default function ContactPage() {
     update({
       firstName: f.firstName,
       lastName:  f.lastName,
-      dob:       f.dob,
+      dob:       f.dob || undefined, // convert empty string to undefined
       phone:     f.phone,
       smsOk:     f.smsOk,
     })
@@ -84,14 +83,22 @@ export default function ContactPage() {
 
         <div>
           <label className="block font-medium mb-1">
-            Date of birth (optional) <span className="text-xs">(MM/DD/YYYY)</span>
+            Date of birth (optional) <span className="text-xs">(MM-DD-YYYY)</span>
           </label>
           <input 
-          type="date"
-          placeholder="YYYY-MM-DD"
-          defaultValue={data.dob ?? ''}
-          {...register('dob')}
-          className="input-field"
+            type="date"
+            {...register('dob')}
+            className="input-field"
+            onFocus={(e) => {
+              if (!e.target.value) {
+                e.target.type = 'date';
+              }
+            }}
+            onBlur={(e) => {
+              if (!e.target.value) {
+                e.target.type = 'text';
+              }
+            }}
           />
           {errors.dob && <p className="text-red-600 text-xs">{errors.dob.message}</p>}
         </div>
