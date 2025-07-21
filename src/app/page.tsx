@@ -79,7 +79,7 @@ export default function Home() {
           
 
           {/* Right side - Signup Form */}
-          <div className="flex justify-center items-center w-full">
+          <div className="flex mt-4 justify-center items-center w-full">
             <div className="w-full max-w-md mt-4"> 
             {/* Customizable background and border colors */}
             <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg p-8">
