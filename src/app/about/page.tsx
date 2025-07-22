@@ -25,7 +25,7 @@ export default function AboutPage() {
         */}
         <Image
           src="/about-hero.jpg"
-          alt="Our kitchen in action"
+          alt="Our bone broth in the making"
           fill
           priority
           className="object-cover"
@@ -41,7 +41,7 @@ export default function AboutPage() {
       </div>
 
       {/* ---------- Origin Story ---------- */}
-      <article className="prose prose-lg max-w-3xl mx-auto dark:prose-invert">
+      <article className="prose mt-4 prose-lg max-w-3xl mx-auto dark:prose-invert">
         <h2 className="text-center font-bold text-2xl">How The Brotherie Came to Life</h2>
 
         <p>
@@ -63,17 +63,15 @@ export default function AboutPage() {
         </p>
 
         <p>
-          Leaving a corporate career that spanned healthcare software at
-          Epic Systems and high-growth tech start-ups, I dove into kettles,
-          not code. Today I run The Brotherie with my husband, our two young taste-testers—who swear by chicken broth
+          Leaving a corporate career that spanned enterprise health data software and high-growth tech start-ups, I dove into kettles,
+          not code (though I did code this website!). Today I run The Brotherie with my husband, our two young taste-testers—who swear by chicken broth
           mac-&-cheese—and Porter the dog, whose tail thumps loudest when his
-          kibble gets a broth boost. We simmer local bones low & slow, skip the
-          shortcuts, and deliver the kind of honest flavor my family has loved
-          for generations.
+          kibble gets a broth boost. 
         </p>
-
-        <p>
-          Whether you&apos;re looking for a morning coffee alternative, a
+        <p>  
+        We simmer local bones low & slow, skip the
+          shortcuts, and deliver the kind of honest flavor my family has loved
+for generations. Whether you&apos;re looking for a morning coffee alternative, a
           chef-grade cooking base, or simply a wholesome daily ritual, we&apos;re
           honored to bring our broth to your table. From our kitchen in
           Arlington, MA to yours. 
