@@ -1,3 +1,5 @@
+'use client'
+
 // src/app/customer/dashboard/orders/page.tsx
 import React from 'react'
 
