@@ -286,6 +286,14 @@ export default function ProductsPage() {
               Questions about our broths or ingredients?
             </p>
             <Link
+              href="/faq"
+              className="inline-flex items-center gap-2 text-emerald-700 font-medium hover:text-emerald-800 transition-colors"
+            >
+              Check out our FAQs
+              <span>→</span>
+            </Link>
+            <br></br>or<br></br> 
+            <Link
               href="/contact"
               className="inline-flex items-center gap-2 text-emerald-700 font-medium hover:text-emerald-800 transition-colors"
             >
