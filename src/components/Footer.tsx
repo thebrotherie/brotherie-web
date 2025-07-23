@@ -8,12 +8,12 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl grid gap-8 px-4 py-10 text-sm sm:grid-cols-2 md:grid-cols-4">
         {/* Brand */}
         <div>
-          <Logo src="/images/text_only_light.png"
-              darkSrc="/images/default_logo.png" /*change this to dark*/
-              alt="The Brotherie"
-              height = {100}
-            />
-
+          <Logo 
+            src="/images/text_only_light.png"
+            darkSrc="/images/default_logo.png" /*change this to dark*/
+            alt="The Brotherie"
+            height={100}
+          />
           <p className="text-slate-600 dark:text-slate-400">
             <br />
             Small-batch bone broth&nbsp;<br />
@@ -21,12 +21,13 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* Links */}
+        {/* Company */}
         <div>
           <h4 className="font-semibold mb-2">Company</h4>
           <ul className="space-y-1">
-            <li><Link href="/about"   className="hover:underline">About</Link></li>
+            <li><Link href="/about" className="hover:underline">About</Link></li>
             <li><Link href="/contact" className="hover:underline">Contact</Link></li>
+            <li><Link href="/faq" className="hover:underline">FAQ</Link></li>
           </ul>
         </div>
 
@@ -34,8 +35,8 @@ export default function Footer() {
         <div>
           <h4 className="font-semibold mb-2">Legal</h4>
           <ul className="space-y-1">
-            <li><Link href="/terms"    className="hover:underline">Terms &amp; Conditions</Link></li>
-            <li><Link href="/privacy"  className="hover:underline">Privacy&nbsp;Policy</Link></li>
+            <li><Link href="/terms" className="hover:underline">Terms &amp; Conditions</Link></li>
+            <li><Link href="/privacy" className="hover:underline">Privacy&nbsp;Policy</Link></li>
           </ul>
         </div>
 
@@ -57,5 +58,5 @@ export default function Footer() {
         © {new Date().getFullYear()} The Brotherie&nbsp;— Nourishment Delivered
       </div>
     </footer>
-  )
+  );
 }
