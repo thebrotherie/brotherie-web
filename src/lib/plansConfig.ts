@@ -41,7 +41,7 @@ export const PLANS: Record<string, Plan> = {
     size: '18oz',
     weeklyPrice: 124, // Update pricing here
     popular: false,
-    features: ['12 containers weekly', 'Maximum variety', 'Free local delivery', 'Great for meal prep']
+    features: ['12 containers weekly', 'Choose your mix', 'Free local delivery', 'Great for meal prep']
   }
 }
 
